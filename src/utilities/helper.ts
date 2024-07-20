@@ -5,5 +5,6 @@ export enum APISTATUS {
   PENDING = "PENDING",
   SUCCESS = "SUCCESS",
   ERROR = "ERROR",
+  FAILED="FAILED"
 }
 

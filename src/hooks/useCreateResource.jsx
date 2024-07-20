@@ -1,7 +1,7 @@
-import axios, { Axios, AxiosPromise, AxiosResponse } from "axios";
-import { useCallback, useEffect, useState } from "react";
 
-import { APISTATUS } from "../utilities/helper";
+import {  useState } from "react";
+
+import { APISTATUS } from "../utilities/helper.ts";
 
 export const useCreateResource = () => {
   const [data, setData] = useState(null);
@@ -16,9 +16,9 @@ export const useCreateResource = () => {
       setRequestStatus(APISTATUS.ERROR);
     }
     if (response) {
-      setData(response.data);
       setRequestStatus(APISTATUS.SUCCESS);
+      setData(response);
     }
   };
-  return { data, initCreateData };
+  return { data, initCreateData,requestStatus };
 };

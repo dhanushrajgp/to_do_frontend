@@ -42,11 +42,17 @@ export const updateTodoAPI = (body={})=>{
     })
 }
 
-export const deleteTodoAPI = (body={})=>{
-    return api.post(`${URLS.fetchTodos}/delete`,body,{
-        baseUrl:BASEURL,
-        headers:{
-          "token":"some token"
-        }
-    })
+export const deleteTodoAPI = async(body={})=>{
+  const response = await api.post(`${URLS.fetchTodos}/delete`, body, {
+    baseURL: BASEURL,
+    headers: {
+      "token": "some token",
+    },
+  });
+  return {
+    data: response.data,
+    status: response.status,
+    statusText: response.statusText,
+    headers: { ...response.headers }, 
+  };
 };

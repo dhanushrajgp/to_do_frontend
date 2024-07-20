@@ -10,6 +10,7 @@ const initialState = {
   todosLength: 0,
   status: APISTATUS.IDLE,
   error: null,
+  errormessage:""
 };
 
 export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
@@ -32,7 +33,7 @@ export const fetchTodo = createAsyncThunk(
 
 export const deleteTodo = createAsyncThunk(
   "todos/deleteTodo",
-  async ({ body }) => {
+  async (body ) => {
     const response = await deleteTodoAPI(body);
     return response?.data;
   }
@@ -82,38 +83,41 @@ export const formsSlice = createSlice({
       .addCase(fetchTodos.fulfilled, (state, action) => {
         state.status = APISTATUS.SUCCESS;
         if(AxiosError){
-          state.status = APISTATUS.ERROR
+          state.status = APISTATUS.FAILED
         }
         state.todos = action.payload;
       })
       .addCase(addNewTodo.fulfilled, (state, action) => {
         if(AxiosError){
-          state.status = APISTATUS.ERROR
+          state.status = APISTATUS.FAILED
         }
         state.todos.push(action.payload);
         state.todosLength = state.todos.length;
       })
       .addCase(fetchTodo.fulfilled, (state, action) => {
         if(AxiosError){
-          state.status = APISTATUS.ERROR
+          state.status = APISTATUS.FAILED
         }
         state.todo = action.payload;
         localStorage.setItem("todo", JSON.stringify(action.payload));
       })
       .addCase(updateTodo.fulfilled, (state, action) => {
         if(AxiosError){
-          state.status = APISTATUS.ERROR
+          state.status = APISTATUS.FAILED
         }
-        state.todo = action.payload;
+        state.todos = action.payload;
       })
+      .addCase(deleteTodo.rejected, (state, action) => {
+        state.status = APISTATUS.ERROR;
+        state.error = action.error.message;
+      }) 
       .addCase(deleteTodo.fulfilled, (state, action) => {
         if(AxiosError){
-          state.status = APISTATUS.ERROR
+          state.status = APISTATUS.FAILED;
         }
-        state.todos = state.forms.filter(
-          (item) => item.title !== action.payload.title
-        );
+        state.todos = action.payload;
       });
+
   },
 });
 
@@ -123,5 +127,6 @@ export const getNetworkStatus = (state) => state.todos.status;
 export const getTodosError = (state) => state.todos.error;
 export const getTodo = (state) => state.todos.todo;
 export const getDeleteStatus = (state) => state.todos.deleteStatus;
+export const getErrorMessage = (state) => state.todos.errormessage;
 
 export default formsSlice.reducer;

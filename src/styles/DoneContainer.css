@@ -1,0 +1,28 @@
+.doneContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: start;
+    gap: 5px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.doneCard{
+    min-height: 50px;
+    min-width: 200px;
+    display: flex;
+    gap: 5%;
+    justify-content: space-between;
+    padding: 1%;
+    font-weight: 600;
+    font-size:large;
+    color: rgb(227, 227, 227);
+}
+
+.doneLayout{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 5%;
+}

@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  background-color: #2f7096;
+  padding: 20px;
 }
 
 .App-logo {
@@ -35,4 +36,50 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.transparent{
+  background: rgba(255, 255, 255, 0.2); /* White background with 20% opacity */
+  backdrop-filter: blur(10px); /* Blur effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  border-radius: 10px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a slight shadow */
+}
+
+button{
+  background-color: #282c34;
+  height: 40px;
+  outline: none;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 10px;
+  font-weight: 600;
+}
+
+button:hover{
+  background-color: rgba(255, 255, 255, 0.2); /* White background with 20% opacity */
+  backdrop-filter: blur(10px); /* Blur effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a slight shadow */
+}
+
+.createTodo{
+  display: inline-flex;
+  gap: 2%;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 200px;
+}
+
+input{
+  outline: none;
+  border: none;
+  height: auto;
+  padding: 3%;
+  font-size: large;
 }

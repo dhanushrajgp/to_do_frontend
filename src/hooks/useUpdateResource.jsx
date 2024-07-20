@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { APISTATUS } from "../utilities/helper";
+import { APISTATUS } from "../utilities/helper.ts";
 
 export const useUpdateResource = () => {
   const [data, setData] = useState(null);
@@ -11,7 +11,8 @@ export const useUpdateResource = () => {
       setRequestStatus(APISTATUS.ERROR);
     }
     if(response){
-      setData(response.data);
+      console.log("response",response)
+      setData(response);
       setRequestStatus(APISTATUS.SUCCESS);
     }
   };
