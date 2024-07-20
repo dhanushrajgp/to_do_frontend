@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import ErrorHandler from "../components/common/errorhandler/Errorhandler";
 import { APISTATUS } from "../utilities/helper.ts";
 import "../styles/TodosLayout.css"
-import Header from "../components/common/header/Header.jsx";
 import DoneContainer from "../components/todos/done/DoneContainer.jsx";
 import PendingContainer from "../components/todos/pending/PendingContainer.jsx";
 import CreateTodo from "../components/todos/CreateTodo.jsx";
@@ -19,13 +18,13 @@ const TodosLayout = () => {
   useGetAllResource(fetchTodos());
   const data = useSelector(getTodos);
   const apiStatus = useSelector(getNetworkStatus);
-  console.log("data", data);
+  console.log("data", data,apiStatus);
 
   const errormessage = useSelector(getErrorMessage);
 
   return (
     <>
-      {Object.keys(data).length > 0 ? (
+      {data && Object.keys(data).length > 0 ? (
         <div className="todosLayout">
             {/* <Header title={"Todo App"} /> */}
             <CreateTodo />
@@ -34,7 +33,7 @@ const TodosLayout = () => {
            
         </div>
       ) : (
-        apiStatus === APISTATUS.ERROR || apiStatus === APISTATUS.FAILED && (
+        (apiStatus === APISTATUS.ERROR || apiStatus === APISTATUS.FAILED) && (
           <ErrorHandler
             content={errormessage}
             requestStatus={apiStatus}

@@ -83,7 +83,7 @@ export const formsSlice = createSlice({
       .addCase(fetchTodos.fulfilled, (state, action) => {
         state.status = APISTATUS.SUCCESS;
         if(AxiosError){
-          state.status = APISTATUS.FAILED
+          state.status = APISTATUS.ERROR
         }
         state.todos = action.payload;
       })
