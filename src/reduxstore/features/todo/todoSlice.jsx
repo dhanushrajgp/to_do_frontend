@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { APISTATUS } from "../../../utilities/helper";
+import { APISTATUS } from "../../../utilities/helper.ts";
 import { createTodoAPI, deleteTodoAPI, fetchToDosApi, updateTodoAPI } from "../../../api/todo";
 
 
@@ -118,10 +118,10 @@ export const formsSlice = createSlice({
 });
 
 export const { todoAdded, todoDeleted } = formsSlice.actions;
-export const getForms = (state) => state.todos.todos;
+export const getTodos = (state) => state.todos.todos;
 export const getNetworkStatus = (state) => state.todos.status;
-export const getFormsError = (state) => state.todos.error;
-export const getForm = (state) => state.todos.todo;
+export const getTodosError = (state) => state.todos.error;
+export const getTodo = (state) => state.todos.todo;
 export const getDeleteStatus = (state) => state.todos.deleteStatus;
 
 export default formsSlice.reducer;

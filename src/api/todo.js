@@ -1,5 +1,5 @@
 
-import { BASEURL } from "../utils/helper";
+import { BASEURL } from "../utilities/helper.ts";
 import api from "./api";
 
 const URLS = {

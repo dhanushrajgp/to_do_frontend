@@ -1,7 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import { useGetAllResource } from './hooks/useGetAllResource';
+import { fetchTodos, getNetworkStatus, getTodos } from './reduxstore/features/todo/todoSlice';
+import { useSelector } from 'react-redux';
 
 function App() {
+
+  useGetAllResource(fetchTodos());
+   const apiStatus = useSelector(getNetworkStatus);
+   const data = useSelector(getTodos);
+
+
   return (
     <div className="App">
       <header className="App-header">
