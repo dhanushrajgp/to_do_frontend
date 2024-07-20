@@ -7,31 +7,46 @@ const URLS = {
 };
 
 export const fetchToDosApi = async() => {
-  return api.get(URLS.fetchTodos, {
+  return api.get(`${URLS.fetchTodos}/get`, {
     baseUrl: BASEURL,
+    headers:{
+      "token":"some token"
+    }
   })
 };
 
 export const fetchTodoAPI = (id) => {
   return api.get(`${URLS.fetchTodos}/${id}`, {
     baseUrl: BASEURL,
+    headers:{
+      "token":"some token"
+    }
   });
 };
 
 export const createTodoAPI = (title,body={})=>{
     return api.post(`${URLS.fetchTodos}/create/${title}`,body,{
-        baseUrl:BASEURL
+        baseUrl:BASEURL,
+        headers:{
+          "token":"some token"
+        }
     })
 }
 
 export const updateTodoAPI = (body={})=>{
     return api.post(`${URLS.fetchTodos}/edit`,body,{
-        baseUrl:BASEURL
+        baseUrl:BASEURL,
+        headers:{
+          "token":"some token"
+        }
     })
 }
 
 export const deleteTodoAPI = (body={})=>{
     return api.post(`${URLS.fetchTodos}/delete`,body,{
-        baseUrl:BASEURL
+        baseUrl:BASEURL,
+        headers:{
+          "token":"some token"
+        }
     })
 };

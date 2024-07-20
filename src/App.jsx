@@ -6,9 +6,11 @@ import { useSelector } from 'react-redux';
 
 function App() {
 
-  useGetAllResource(fetchTodos());
+    useGetAllResource(fetchTodos());
    const apiStatus = useSelector(getNetworkStatus);
    const data = useSelector(getTodos);
+
+   console.log("data",data)
 
 
   return (
