@@ -20,7 +20,7 @@ export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
 
 
 export const fetchTodo = createAsyncThunk(
-  "todos/fetchForm",
+  "todos/fetchTodo",
   async ({ id }) => {
     const response = await fetchTodo(id);
     if (!response) {
