@@ -81,45 +81,52 @@ export const formsSlice = createSlice({
         state.error = action.error.message;
       }) 
       .addCase(fetchTodos.fulfilled, (state, action) => {
-        state.status = APISTATUS.SUCCESS;
+      
         if(AxiosError.ERR_BAD_REQUEST){
           state.status = APISTATUS.FAILED
         }
         if(AxiosError.ERR_NETWORK){
           state.status=APISTATUS.ERROR
         }
-        state.todos = action.payload;
+
+          state.todos = action.payload;
+          state.status = APISTATUS.SUCCESS;
+        
+       
       })
       .addCase(addNewTodo.fulfilled, (state, action) => {
-        state.status = APISTATUS.SUCCESS;
+       
         if(AxiosError.ERR_BAD_REQUEST){
           state.status = APISTATUS.FAILED
         }
         if(AxiosError.ERR_NETWORK){
           state.status=APISTATUS.ERROR
         }
+        state.status = APISTATUS.SUCCESS;
         state.todos.push(action.payload);
         state.todosLength = state.todos.length;
       })
       .addCase(fetchTodo.fulfilled, (state, action) => {
-        state.status = APISTATUS.SUCCESS;
+       
         if(AxiosError.ERR_BAD_REQUEST){
           state.status = APISTATUS.FAILED
         }
         if(AxiosError.ERR_NETWORK){
           state.status=APISTATUS.ERROR
         }
+        state.status = APISTATUS.SUCCESS;
         state.todo = action.payload;
         localStorage.setItem("todo", JSON.stringify(action.payload));
       })
       .addCase(updateTodo.fulfilled, (state, action) => {
-        state.status = APISTATUS.SUCCESS;
+        
         if(AxiosError.ERR_BAD_REQUEST){
           state.status = APISTATUS.FAILED
         }
         if(AxiosError.ERR_NETWORK){
           state.status=APISTATUS.ERROR
         }
+        state.status = APISTATUS.SUCCESS;
         state.todos = action.payload;
       })
       .addCase(deleteTodo.rejected, (state, action) => {
@@ -132,13 +139,14 @@ export const formsSlice = createSlice({
         state.error = action.error.message;
       }) 
       .addCase(deleteTodo.fulfilled, (state, action) => {
-        state.status = APISTATUS.SUCCESS;
+        
         if(AxiosError.ERR_BAD_REQUEST){
           state.status = APISTATUS.FAILED
         }
         if(AxiosError.ERR_NETWORK){
           state.status=APISTATUS.ERROR
         }
+        state.status = APISTATUS.SUCCESS;
         state.todos = action.payload;
       });
 

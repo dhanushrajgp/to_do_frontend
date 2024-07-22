@@ -69,11 +69,12 @@ button:hover{
 }
 
 .createTodo{
-  display: inline-flex;
+  display: flex;
   gap: 2%;
   justify-content: space-between;
   align-items: center;
-  max-width: 200px;
+  max-width: 300px;
+
 }
 
 input{
@@ -82,4 +83,13 @@ input{
   height: auto;
   padding: 3%;
   font-size: large;
+  width: 100%;
+}
+
+
+@media (max-width:700px){
+  
+  .createTodo{
+    flex-wrap: wrap;
+  }
 }
