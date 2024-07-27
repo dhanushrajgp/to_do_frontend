@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { APISTATUS } from "../../../utilities/helper.ts";
 import { createTodoAPI, deleteTodoAPI, fetchToDosApi, updateTodoAPI } from "../../../api/todo";
+import checkStatus from "../../common.js";
 
 
 const initialState = {
@@ -13,9 +14,9 @@ const initialState = {
   errormessage:""
 };
 
-export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
-  const response = await fetchToDosApi();
-  return response?.data;
+export const fetchTodos = createAsyncThunk("todos/fetchTodos", async (token) => {
+  const response = await fetchToDosApi(token);
+  return response;
 });
 
 
@@ -27,7 +28,7 @@ export const fetchTodo = createAsyncThunk(
     if (!response) {
       initialState.status = APISTATUS.ERROR;
     }
-    return response?.data;
+    return response;
   }
 );
 
@@ -35,7 +36,7 @@ export const deleteTodo = createAsyncThunk(
   "todos/deleteTodo",
   async (body ) => {
     const response = await deleteTodoAPI(body);
-    return response?.data;
+    return response;
   }
 );
 
@@ -44,7 +45,7 @@ export const addNewTodo = createAsyncThunk(
   "todos/addNewTodo",
   async ({title}) => {
     const response = await createTodoAPI(title)
-    return response?.data;
+    return response;
   }
 );
 
@@ -52,11 +53,9 @@ export const updateTodo = createAsyncThunk(
   "todos/updateTodo",
   async (body) => {
     const response = await updateTodoAPI(body)
-    return response?.data;
+    return response;
   }
 );
-
-
 
 export const formsSlice = createSlice({
   name: "todos",
@@ -81,73 +80,51 @@ export const formsSlice = createSlice({
         state.error = action.error.message;
       }) 
       .addCase(fetchTodos.fulfilled, (state, action) => {
-      
-        if(AxiosError.ERR_BAD_REQUEST){
-          state.status = APISTATUS.FAILED
-        }
-        if(AxiosError.ERR_NETWORK){
-          state.status=APISTATUS.ERROR
-        }
-
-          state.todos = action.payload;
-          state.status = APISTATUS.SUCCESS;
-        
-       
-      })
-      .addCase(addNewTodo.fulfilled, (state, action) => {
-       
-        if(AxiosError.ERR_BAD_REQUEST){
-          state.status = APISTATUS.FAILED
-        }
-        if(AxiosError.ERR_NETWORK){
-          state.status=APISTATUS.ERROR
-        }
+        if(action.payload.name === "AxiosError"){
+          checkStatus(action,state);
+        }else{
+        state.todos = action.payload.data;
         state.status = APISTATUS.SUCCESS;
-        state.todos.push(action.payload);
-        state.todosLength = state.todos.length;
+        }})
+      .addCase(addNewTodo.fulfilled, (state, action) => {
+        if(action.payload.name === "AxiosError"){
+          checkStatus(action,state);}
+          else{
+            state.status = APISTATUS.SUCCESS;
+            state.todos.push(action.payload.data);
+            state.todosLength = state.todos.length;
+          }
       })
       .addCase(fetchTodo.fulfilled, (state, action) => {
-       
-        if(AxiosError.ERR_BAD_REQUEST){
-          state.status = APISTATUS.FAILED
-        }
-        if(AxiosError.ERR_NETWORK){
-          state.status=APISTATUS.ERROR
-        }
-        state.status = APISTATUS.SUCCESS;
-        state.todo = action.payload;
-        localStorage.setItem("todo", JSON.stringify(action.payload));
+        if(action.payload.name === "AxiosError"){
+          checkStatus(action,state);}
+          else{
+            state.status = APISTATUS.SUCCESS;
+            state.todo = action.payload;
+            localStorage.setItem("todo", JSON.stringify(action.payload.data));
+          }
+
       })
       .addCase(updateTodo.fulfilled, (state, action) => {
+        if(action.payload.name === "AxiosError"){
+          checkStatus(action,state);}
+          else{
+            state.status = APISTATUS.SUCCESS;
+            state.todos = action.payload.data;
+          }
         
-        if(AxiosError.ERR_BAD_REQUEST){
-          state.status = APISTATUS.FAILED
-        }
-        if(AxiosError.ERR_NETWORK){
-          state.status=APISTATUS.ERROR
-        }
-        state.status = APISTATUS.SUCCESS;
-        state.todos = action.payload;
       })
       .addCase(deleteTodo.rejected, (state, action) => {
-        if(AxiosError.ERR_BAD_REQUEST){
-          state.status = APISTATUS.FAILED
-        }
-        if(AxiosError.ERR_NETWORK){
-          state.status=APISTATUS.ERROR
-        }
+        checkStatus(action,state);
         state.error = action.error.message;
       }) 
       .addCase(deleteTodo.fulfilled, (state, action) => {
-        
-        if(AxiosError.ERR_BAD_REQUEST){
-          state.status = APISTATUS.FAILED
-        }
-        if(AxiosError.ERR_NETWORK){
-          state.status=APISTATUS.ERROR
-        }
-        state.status = APISTATUS.SUCCESS;
-        state.todos = action.payload;
+        if(action.payload.name === "AxiosError"){
+          checkStatus(action,state);}
+          else{
+            state.status = APISTATUS.SUCCESS;
+            state.todos = action.payload.data;
+          }
       });
 
   },
@@ -159,6 +136,6 @@ export const getNetworkStatus = (state) => state.todos.status;
 export const getTodosError = (state) => state.todos.error;
 export const getTodo = (state) => state.todos.todo;
 export const getDeleteStatus = (state) => state.todos.deleteStatus;
-export const getErrorMessage = (state) => state.todos.errormessage;
+export const getErrorMessage = (state) => state.todos.error;
 
 export default formsSlice.reducer;

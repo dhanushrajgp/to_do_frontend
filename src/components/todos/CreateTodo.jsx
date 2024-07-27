@@ -17,11 +17,11 @@ const CreateTodo = () => {
 
   const {initCreateData} = useCreateResource();
   const dispatch = useDispatch();
-
+  const token = localStorage.getItem("token");
   const handleCreate = ()=>{
     try{
         initCreateData(createTodoAPI(value))
-        dispatch(fetchTodos())
+        dispatch(fetchTodos(token))
         
     }
     catch(err){

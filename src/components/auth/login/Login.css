@@ -1,0 +1,18 @@
+.loginContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    flex-wrap: wrap;
+    min-height: 90vh;
+}
+
+.usernameInput,.passwordInput{
+    height: 80px;
+}
+
+.loginButton{
+    width: 300px;
+}
