@@ -9,3 +9,13 @@ export enum APISTATUS {
   TOKEN_FAILED="TOKEN FAILED"
 }
 
+
+
+export default function getHeaders(){
+  let headers = {}
+  const token = localStorage.getItem("token");
+  headers = {
+    "token":token
+  }
+  return headers;
+}

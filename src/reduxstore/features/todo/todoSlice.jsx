@@ -14,8 +14,8 @@ const initialState = {
   errormessage:""
 };
 
-export const fetchTodos = createAsyncThunk("todos/fetchTodos", async (token) => {
-  const response = await fetchToDosApi(token);
+export const fetchTodos = createAsyncThunk("todos/fetchTodos", async (headers) => {
+  const response = await fetchToDosApi(headers);
   return response;
 });
 
@@ -23,8 +23,8 @@ export const fetchTodos = createAsyncThunk("todos/fetchTodos", async (token) => 
 
 export const fetchTodo = createAsyncThunk(
   "todos/fetchTodo",
-  async ({ id }) => {
-    const response = await fetchTodo(id);
+  async ({ id },headers) => {
+    const response = await fetchTodo(id,headers);
     if (!response) {
       initialState.status = APISTATUS.ERROR;
     }
@@ -34,7 +34,7 @@ export const fetchTodo = createAsyncThunk(
 
 export const deleteTodo = createAsyncThunk(
   "todos/deleteTodo",
-  async (body ) => {
+  async (body) => {
     const response = await deleteTodoAPI(body);
     return response;
   }
@@ -43,8 +43,8 @@ export const deleteTodo = createAsyncThunk(
 
 export const addNewTodo = createAsyncThunk(
   "todos/addNewTodo",
-  async ({title}) => {
-    const response = await createTodoAPI(title)
+  async ({title},headers) => {
+    const response = await createTodoAPI(title,headers)
     return response;
   }
 );

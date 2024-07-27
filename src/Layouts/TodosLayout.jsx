@@ -8,7 +8,7 @@ import {
 } from "../reduxstore/features/todo/todoSlice";
 import { useSelector } from "react-redux";
 import ErrorHandler from "../components/common/errorhandler/Errorhandler";
-import { APISTATUS } from "../utilities/helper.ts";
+import getHeaders, { APISTATUS } from "../utilities/helper.ts";
 import "../styles/TodosLayout.css"
 import DoneContainer from "../components/todos/done/DoneContainer.jsx";
 import PendingContainer from "../components/todos/pending/PendingContainer.jsx";
@@ -16,8 +16,8 @@ import CreateTodo from "../components/todos/CreateTodo.jsx";
 import { Navigate, useNavigate, useNavigation } from "react-router-dom";
 
 const TodosLayout = () => {
-  const token = localStorage.getItem("token");
-  useGetAllResource(fetchTodos(token));
+  const headers = getHeaders();
+  useGetAllResource(fetchTodos(headers));
   const data = useSelector(getTodos);
   const apiStatus = useSelector(getNetworkStatus);
   const errormessage = useSelector(getErrorMessage);

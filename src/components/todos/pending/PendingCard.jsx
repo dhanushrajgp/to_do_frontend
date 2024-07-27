@@ -1,13 +1,16 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { updateTodo } from '../../../reduxstore/features/todo/todoSlice';
+import getHeaders from '../../../utilities/helper.ts';
+
 
 const PendingCard = ({data}) => {
-
+  const headers = getHeaders();
     const dispatch = useDispatch();
     const handleEdit = (title)=>{
         try{
-          dispatch(updateTodo({title:title,status:"DONE"}))
+          console.log("headers",headers)
+          dispatch(updateTodo({title:title,status:"DONE",headers}))
         }
         catch(err){
             console.log("failed to update todo",err)

@@ -5,7 +5,7 @@ import { createTodoAPI } from "../../api/todo";
 import { useGetAllResource } from "../../hooks/useGetAllResource";
 import { fetchTodos } from "../../reduxstore/features/todo/todoSlice";
 import { useDispatch } from "react-redux";
-import { APISTATUS } from "../../utilities/helper.ts";
+import getHeaders, { APISTATUS } from "../../utilities/helper.ts";
 
 
 const CreateTodo = () => {
@@ -14,15 +14,14 @@ const CreateTodo = () => {
   const handleChangeValue = (event) => {
     setValue(event.target.value);
   };
-
   const {initCreateData} = useCreateResource();
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
+  const headers = getHeaders();
+
   const handleCreate = ()=>{
     try{
-        initCreateData(createTodoAPI(value))
-        dispatch(fetchTodos(token))
-        
+        initCreateData(createTodoAPI(value,null,headers))
+        dispatch(fetchTodos(headers))
     }
     catch(err){
         console.log("failed to create todo",err);
